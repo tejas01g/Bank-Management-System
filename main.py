@@ -16,10 +16,15 @@ class Bank:
     except Exception as err:
          print(f"an exception occured as {err}")
 
+    @staticmethod
+    def update():
+         with open(Bank.database,'w') as fs:
+              fs.write(json.dumps(Bank.data))
 
 
-    def createaccount(self):
-        data = {
+
+    def Createaccount(self):
+        info = {
              "name" : input("Tell your name :-"),
              "age" : int(input("Tell your age :-")),
              "email" : input("Tell your email"),
@@ -27,14 +32,16 @@ class Bank:
              "accountNo." : 1234,
              "balance" : 0
         }
-        if data['age'] < 18 or len(str(data['pin'])) != 4:
+        if info['age'] < 18 or len(str(info['pin'])) != 4:
              print('sorry you cannot create your account')
         else:
              print("account has been created successfully")
-             for i in data:
-                  print(f"{i} : {data[i]}")
+             for i in info:
+                  print(f"{i} : {info[i]}")
                   print("please note your account no.")
 
+                  Bank.data.append(info)
+                  Bank.update()
 
 user = Bank()
 print("press 1 for creating an account")
@@ -44,7 +51,7 @@ print("press 4 for details")
 print("press 5 for updating the details")
 print("press 6 for deleting your account")
 
-int(input("tell your response :-"))
+check = int(input("tell your response :-"))
 
 if check == 1:
     user.Createaccount()
